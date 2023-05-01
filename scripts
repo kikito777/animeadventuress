@@ -1,0 +1,68 @@
+local Menu = {}
+Menu.Enabled = true -- Change to false to disable the menu
+Menu.Title = "AnimeAdventures Scripts"
+Menu.ButtonColor = Color3.fromRGB(0, 102, 255) -- Change the RGB values to your desired color
+Menu.ButtonTextColor = Color3.fromRGB(255, 255, 255) -- Change the RGB values to your desired text color
+Menu.ButtonTextSize = 14 -- Change to your desired text size
+
+-- Insert your script links below
+local Scripts = {
+    "https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua",
+   "https://raw.githubusercontent.com/TrapstarKSSKSKSKKS/Main/main/TrapHub.lua"
+}
+
+-- Don't edit anything below this line
+if Menu.Enabled then
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "MyScriptMenu"
+    ScreenGui.Parent = game.CoreGui
+    
+    local Frame = Instance.new("Frame")
+    Frame.Name = "MenuFrame"
+    Frame.BackgroundTransparency = 0.5
+    Frame.BackgroundColor3 = Color3.new(0,0,0) -- Change the background color to black
+    Frame.BorderSizePixel = 0
+    Frame.Position = UDim2.new(0.4, 0, 0.4, 0)
+    Frame.Size = UDim2.new(0, 300, 0, 400) -- Change the size of the frame
+    Frame.Active = true -- Make the frame draggable
+    Frame.Draggable = true -- Make the frame draggable
+    Frame.Parent = ScreenGui
+    
+    local Title = Instance.new("TextLabel")
+    Title.Name = "MenuTitle"
+    Title.BackgroundTransparency = 1
+    Title.Font = Enum.Font.SourceSansBold
+    Title.Text = Menu.Title
+    Title.TextColor3 = Menu.ButtonTextColor
+    Title.TextSize = 18
+    Title.Position = UDim2.new(0, 0, 0, 5)
+    Title.Size = UDim2.new(1, 0, 0, 20)
+    Title.Parent = Frame
+    
+    local function LoadScript(Link)
+        local Script = loadstring(game:HttpGet(Link))()
+        if Script then
+            print("Loaded: " .. Link)
+        else
+            print("Error loading: " .. Link)
+        end
+    end
+    
+    for i, v in ipairs(Scripts) do
+        local Button = Instance.new("TextButton")
+        Button.Name = "ScriptButton" .. i
+        Button.BackgroundColor3 = Menu.ButtonColor
+        Button.BackgroundTransparency = 0.5
+        Button.BorderSizePixel = 0
+        Button.Font = Enum.Font.SourceSansBold
+        Button.Text = "Script " .. i
+        Button.TextColor3 = Menu.ButtonTextColor
+        Button.TextSize = Menu.ButtonTextSize
+        Button.Position = UDim2.new(0, 10, 0, 35 + (i-1) * 40)
+        Button.Size = UDim2.new(0, 280, 0, 30)
+        Button.Parent = Frame
+        Button.MouseButton1Click:Connect(function()
+            LoadScript(v)
+        end)
+    end
+end
